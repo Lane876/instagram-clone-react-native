@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, FlatList } from 'react-native'
 import Post from './Post'
-import Stories from './Stories'
+import UserStoriesPreview from './UserStoriesPreview'
 
 const data = [
      {
@@ -41,7 +41,7 @@ export default function Feed() {
         <FlatList 
         data={data}
         renderItem={({item})=> <Post post={item}/>}
-        ListHeaderComponent={Stories}
+        ListHeaderComponent={UserStoriesPreview}
         keyExtractor={(item, index) => index.toString()}
         />
     )

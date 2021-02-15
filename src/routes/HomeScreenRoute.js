@@ -13,6 +13,7 @@ function HomeStackScreen() {
     <HomeStack.Navigator>
       <HomeStack.Screen name="Home" component={HomeScreen} 
       options={{
+        title: 'Instagram',
         headerLeftContainerStyle: {
           marginLeft: 15
         },
@@ -23,7 +24,7 @@ function HomeStackScreen() {
           <Feather name='camera' size={25}/>
         ),
         headerTitle: () => (
-          <Image source={logo} resizeMode='contain' style={{width:135}} />
+          <Image source={logo} resizeMode='contain' style={{width:135, height: 50}} />
         ),
         headerRight: () => (
           <Feather name='send' size={25}/>
