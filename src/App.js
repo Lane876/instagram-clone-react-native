@@ -7,6 +7,7 @@
  */
 import 'react-native-gesture-handler';
 import React from 'react';
+import { withAuthenticator } from 'aws-amplify-react-native'
 import { StatusBar} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Routes from './routes/Routes';
@@ -20,4 +21,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withAuthenticator(App);

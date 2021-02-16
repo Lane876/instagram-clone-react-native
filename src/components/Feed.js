@@ -1,45 +1,29 @@
-import React from 'react'
-import { View, Text, FlatList } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { FlatList } from 'react-native'
+import { API, graphqlOperation } from 'aws-amplify'
+import { listPosts } from '../graphql/queries'
 import Post from './Post'
 import UserStoriesPreview from './UserStoriesPreview'
 
-const data = [
-     {
-        user: {
-            imageUri: 'https://images.unsplash.com/photo-1492567291473-fe3dfc175b45?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=631&q=80',
-            name: 'Milan'
-        },
-        imageUri: 'https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=879&q=80',
-        caption: 'Red blause day #instagram',
-        likesCount: 1234,
-        postedAt: '6 minutes ago'
-    },
-     {
-        user: {
-            imageUri: 'https://images.unsplash.com/photo-1492567291473-fe3dfc175b45?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=631&q=80',
-            name: 'Milan'
-        },
-        imageUri: 'https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=879&q=80',
-        caption: 'Red blause day #instagram',
-        likesCount: 1234,
-        postedAt: '6 minutes ago'
-    },
-     {
-        user: {
-            imageUri: 'https://images.unsplash.com/photo-1492567291473-fe3dfc175b45?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=631&q=80',
-            name: 'Milan'
-        },
-        imageUri: 'https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=879&q=80',
-        caption: 'Red blause day #instagram',
-        likesCount: 1234,
-        postedAt: '6 minutes ago'
-    },
-]
-
 export default function Feed() {
+    const [posts, setPosts] =  useState([])
+
+    useEffect(() => {
+        fetchPosts()
+    }, [])
+
+    const fetchPosts = async () => {
+        try {
+            const postsData = await API.graphql(graphqlOperation(listPosts))
+            setPosts(postsData.data.listPosts.items);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     return (
         <FlatList 
-        data={data}
+        data={posts}
         renderItem={({item})=> <Post post={item}/>}
         ListHeaderComponent={UserStoriesPreview}
         keyExtractor={(item, index) => index.toString()}

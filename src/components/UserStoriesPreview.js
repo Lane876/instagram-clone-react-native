@@ -1,12 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { API, graphqlOperation } from 'aws-amplify'
+import { listStorys } from '../graphql/queries'
 import UserStoryPreview from './UserStoryPreview'
-import data from '../../src/data/stories'
 
 export default function UserStoriesPreview() {
+
+    const [stories, setStories] =  useState([])
+
+    useEffect(() => {
+        fetchStories()
+    }, [])
+
+    const fetchStories = async () => {
+        try {
+            const storiesData = await API.graphql(graphqlOperation(listStorys))
+            setStories(storiesData.data.listStorys.items);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     return (
         <FlatList 
-            data={data}
+            data={stories}
             keyExtractor={(name, index) => index.toString()}
             horizontal
             showsHorizontalScrollIndicator={false}

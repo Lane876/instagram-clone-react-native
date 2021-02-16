@@ -7,9 +7,9 @@ import PostHeader from './PostHeader'
 export default function Post({post}) {
     return (
         <View>
-            <PostHeader imageUri={post.user.imageUri} name={post.user.name}/>
-            <PostBody imageUri={post.imageUri}/>
-            <PostFooter likesCount={post.likesCount} caption={post.caption} postedAt={post.postedAt}/>
+            <PostHeader imageUri={post.user.image} name={post.user.name}/>
+            <PostBody imageUri={post.image}/>
+            <PostFooter likesCount={post.likes} caption={post.caption} postedAt={post.createdAt}/>
         </View>
     )
 }

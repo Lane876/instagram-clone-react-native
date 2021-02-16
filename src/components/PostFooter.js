@@ -33,7 +33,7 @@ export default function PostFooter({likesCount: likesCountProp, caption, postedA
           <BookmarkIcon name="bookmark-o" size={25} color={'#545454'} />
         </View>
       </View>
-      <Text style={styles.likes}>{likesCount}</Text>
+      <Text style={styles.likes}>{likesCount} likes</Text>
       <Text style={styles.caption}>{caption}</Text>
       <Text style={styles.postedAt}>{postedAt}</Text>
     </View>
